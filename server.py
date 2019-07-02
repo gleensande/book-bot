@@ -1,6 +1,7 @@
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 
+from book_bot import BookBot
 from config import api_key
 
 def write_msg(user_id, message, random_id):
@@ -20,6 +21,9 @@ print('Сервер слушает')
 
 message_id = 0
 
+# Бот для каждого пользователя, с которым переписываемся
+bots = {}
+
 # Основной цикл
 for event in longpoll.listen():
 
@@ -33,12 +37,15 @@ for event in longpoll.listen():
             # Сообщение от пользователя
             request = event.text
 
-            # Каменная логика ответа
-            if request == "привет":
-                write_msg(event.user_id, "Привет с:", message_id)
-            elif request == "пока":
-                write_msg(event.user_id, "Пока :с", message_id)
-            else:
-                write_msg(event.user_id, "Непонятно", message_id)
+            print('Пришло сообщение')
+            print('От: ', event.user_id)
 
-            message_id += 1
+            if not (event.user_id in bots.keys()):
+                bots[event.user_id] = BookBot(event.user_id)
+
+            bot = bots[event.user_id]
+            message, random_id = bot.new_message(event.text)
+
+            write_msg(event.user_id, message, random_id)
+            
+            print('Text: ', event.text)
