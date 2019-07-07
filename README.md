@@ -1,5 +1,6 @@
-# book-bot
+# Book-bot
 Chat-bot for the Bauman book club
 
-# database, actual version
-![actual version of database](db/actual_db.png "db actual version")
+# Database, actual version
+![actual db](db/db_actual.png?raw=true "actual db")
+
