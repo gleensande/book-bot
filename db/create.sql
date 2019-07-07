@@ -1,0 +1,55 @@
+CREATE DATABASE IF NOT EXISTS books;
+
+CREATE TABLE IF NOT EXISTS book (
+	id INT AUTOINCREMENT,
+	title VARCHAR(255),
+	description TEXT,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS genre (
+	id INT AUTOINCREMENT,
+	title VARCHAR(255)
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS author (
+	id INT AUTOINCREMENT,
+	name VARCHAR(255),
+	surname VARCHAR(255),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS book_genre (
+	id INT AUTOINCREMENT,
+	book_id INT NOT NULL,
+	genre_id INT NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (book_id)
+        	REFERENCES book(id)
+        	ON DELETE CASCADE
+	FOREIGN KEY (genre_id)
+        	REFERENCES genre(id)
+        	ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS book_author (
+	id INT AUTOINCREMENT,
+	book_id INT NOT NULL,
+	author_id INT NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (book_id)
+        	REFERENCES book(id)
+        	ON DELETE CASCADE
+	FOREIGN KEY (author_id)
+        	REFERENCES author(id)
+        	ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS readers (
+	id INT,
+	name VARCHAR(255),
+	surname VARCHAR(255),
+	PRIMARY KEY (id)
+);
+
